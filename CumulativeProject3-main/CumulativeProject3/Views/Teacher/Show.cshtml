@@ -1,0 +1,20 @@
+﻿
+@model CumulativeProject3.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<div class="row mb-5">
+        <div class="col-md-10">
+            <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+        </div>
+        <div class="col-md-2">
+            <a href="/Teacher/Update/@Model.teacherId" class="btn btn-primary btn-block">Update</a>
+        </div>
+    </div>
+<div id="containershow" class="my-3">
+    <h2>@Model.teacherFname @Model.teacherLname</h2>
+    <p>Employee Number: @Model.employeenumber</p>
+    <p>Salary: @Model.salary</p> 
+    <p>Date Hired: @Convert.ToDateTime(Model.hiredate).ToString("dd MMM yyyy")</p>
+</div>

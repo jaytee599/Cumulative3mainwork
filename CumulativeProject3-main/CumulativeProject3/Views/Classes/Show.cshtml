@@ -1,0 +1,15 @@
+﻿
+@model CumulativeProject3.Models.Classes
+@{
+    ViewBag.Title = "Show";
+}
+
+<a class="navlink" href="/Classes/List">Back To Classes</a>
+<div id="containershow" class="my-3">
+    <h2>@Model.classname</h2>
+    <p>Class Id: @Model.classId</p>
+    <p>Class Teacher Id: @Model.teacherId</p>
+    <p>Class Code: @Model.classcode</p>
+    <p>Start Date: @Convert.ToDateTime(Model.startdate).ToString("dd MMM yyyy")</p>
+    <p>Finish Date: @Convert.ToDateTime(Model.finishdate).ToString("dd MMM yyyy")</p>
+</div>

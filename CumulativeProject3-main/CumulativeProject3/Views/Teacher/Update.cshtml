@@ -1,0 +1,109 @@
+﻿@model CumulativeProject3.Models.Teacher
+@{
+    ViewBag.Title = "Update Teacher";
+}
+
+<div class="container">
+    <h2>Update Teacher</h2>
+    <form id="updateTeacherForm">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.teacherId, new { id = "teacherId" })
+        </div>
+        
+        <div class="my-3 form-group">
+            @Html.LabelFor(model => model.teacherFname, "First Name (e.g. Joel)", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.teacherFname, new { @class = "form-control", id = "teacherFname" })
+            @Html.ValidationMessageFor(model => model.teacherFname)
+        </div>
+
+        <div class="my-3 form-group">
+            @Html.LabelFor(model => model.teacherLname, "Last Name (e.g. Tuffour )", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.teacherLname, new { @class = "form-control", id = "teacherLname" })
+            @Html.ValidationMessageFor(model => model.teacherLname)
+        </div>
+
+        <div class="my-3 form-group">
+            @Html.LabelFor(model => model.employeenumber, "Employee Number", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.employeenumber, new { @class = "form-control", id = "employeenumber" })
+            @Html.ValidationMessageFor(model => model.employeenumber)
+        </div>
+        
+        <div class="my-3 form-group">
+            @Html.LabelFor(model => model.hiredate, "Date Hired", htmlAttributes: new { @class = "control-label" })
+            @{
+                var hireDate = DateTime.Parse(Model.hiredate);
+            }
+            @Html.TextBoxFor(model => model.hiredate, "{0:yyyy-MM-dd}", new { @class = "form-control", id = "hiredate", type = "date", @Value = hireDate.ToString("yyyy-MM-dd") })
+            @Html.ValidationMessageFor(model => model.hiredate)
+        </div>
+
+        <div class="my-3 form-group">
+            @Html.LabelFor(model => model.employeenumber, "Salary", htmlAttributes: new { @class = "control-label" })
+            @Html.LabelFor(model => model.salary)
+            @Html.TextBoxFor(model => model.salary, new { @class = "form-control", id = "salary" })
+            @Html.ValidationMessageFor(model => model.salary)
+        </div>
+
+        <div class="mt-3">
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+            <a href="/Teacher/List" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function submitForm() {
+        const teacherId = document.getElementById("teacherId").value;
+        const teacherFname = document.getElementById("teacherFname").value;
+        const teacherLname = document.getElementById("teacherLname").value;
+        const employeenumber = document.getElementById("employeenumber").value;
+        const hiredate = document.getElementById("hiredate").value;
+        const salary = document.getElementById("salary").value;
+    
+        if (teacherFname === "") {
+            alert("Please enter first name");
+            return false;
+        }
+        if (teacherLname === "") {
+            alert("Please enter last name");
+            return false;
+        }
+        if (employeenumber === "") {
+            alert("Please enter employee number");
+            return false;
+        }
+        if (hiredate === "") {
+            alert("Please select hire date");
+            return false;
+        }
+        if (salary === "") {
+            alert("Please enter salary");
+            return false;
+        }
+
+        const formData = {
+            teacherFname: teacherFname,
+            teacherLname: teacherLname,
+            employeenumber: employeenumber,
+            hiredate: hiredate,
+            salary: salary
+        };
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/api/TeacherData/UpdateTeacher/"+teacherId, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    alert("Teacher updated successfully");
+                    window.location.href = "/Teacher/Show/"+teacherId;
+                } else {
+                    alert("Error updating teacher: " + xhr.statusText);
+                }
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+    }
+</script>

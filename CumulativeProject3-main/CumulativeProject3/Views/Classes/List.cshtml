@@ -1,0 +1,15 @@
+﻿
+@model IEnumerable<CumulativeProject3.Models.Classes>
+@{
+    ViewBag.Title = "Classes";
+}
+
+<div id="containerlist">
+    <h2>List of Classes</h2>
+    @foreach (var classes in Model)
+    {
+        <div class="listitem row">
+            <div class="col-md-12"><a href="/Classes/Show/@classes.classId">@classes.classcode @classes.teacherId @classes.startdate @classes.finishdate @classes.classname</a></div>
+        </div>
+    }
+</div>
